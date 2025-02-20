@@ -10,6 +10,8 @@
           <mat-list-item>
             <mat-icon matListItemIcon>description</mat-icon>
             <p matListItemTitle>Body</p>
+
+
             <p matListItemLine class="todo-card-body">{{ todo().body }}</p>
           </mat-list-item>
           <mat-divider [inset]=true></mat-divider>
@@ -25,7 +27,7 @@
       <mat-card-actions>
         <button mat-button data-test="viewTodoButton" [routerLink]="['/todos', todo()._id]">View Todo</button>
 
-        <!-- make sure thge router link goes somewhere  -->
+        <!-- make sure the router link goes somewhere  -->
       </mat-card-actions>
     }
   </mat-card>

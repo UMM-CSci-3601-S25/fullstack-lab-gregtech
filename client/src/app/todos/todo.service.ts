@@ -15,14 +15,13 @@ export class TodoService {
   }
 
   // implement getTodos
-  getTodos(filters: { category?: TodoCategory; status?: boolean; body?: string;}): Observable<Todo[]> {
+  getTodos(filters: { /*category?: TodoCategory;*/ status?: boolean; body?: string;}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
 
       // filter by body
       if (filters.body) {
-
-        httpParams = httpParams.set('body',filters.body);
+        httpParams = httpParams.set('body', filters.body);
       }
 
       // filter by status
@@ -41,17 +40,19 @@ export class TodoService {
 }
 
 
-    filterTodos(todos: Todo[], filters: { status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
+
+  getTodoById(id: string): Observable<Todo> {
+
+    return this.httpClient.get<Todo>(`${this.todoUrl}/${id}`);
+  }
+    filterTodos(todos: Todo[], filters: {/*status?: boolean*/ owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
       let filteredTodos = todos;
-
-
 
       // filter by owner
       if (filters.owner) {
         filters.owner = filters.owner.toLowerCase();
         filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
       }
-
 
       // filter by category
       if (filters.category) {
@@ -60,7 +61,6 @@ export class TodoService {
 
       return filteredTodos;
     }
-
 
 
 
