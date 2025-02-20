@@ -21,7 +21,7 @@ export class TodoService {
 
       // filter by body
       if (filters.body) {
-        filters.body = filters.body.toLowerCase();
+
         httpParams = httpParams.set('body',filters.body);
       }
 
@@ -54,8 +54,8 @@ export class TodoService {
 
 
       // filter by category
-      if (filters.category !== undefined) {
-        filteredTodos = filteredTodos.filter(todo => todo.category, filters.category);
+      if (filters.category) {
+        filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category) !== -1);
       }
 
       return filteredTodos;

@@ -66,7 +66,7 @@ describe('TodoService', () => {
 
     describe(' about filter Todos', () => {
 
-      
+
 
         it(`filters by status`, () => {
 
@@ -80,7 +80,7 @@ describe('TodoService', () => {
 
             expect(mockedMethod)
               .withContext('talks to the correct endpoint')
-              .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('status', 'true') });
+              .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('status', true) });
           });
         });
 
@@ -116,16 +116,17 @@ describe('TodoService', () => {
 
 
 
-        it(`filters by category`, () => {
+        it('filters by category', () => {
+          const todoCategory = 'video games';
+
+          const filterTodos = todoService.filterTodos(testTodos, { category: todoCategory });
+
+          expect(filterTodos.length).toBe(1);
 
 
-          const category = 'homework';
-          const filteredTodos = todoService.filterTodos(testTodos, { category });
-
-          expect(filteredTodos.length).toBe(1);
-          expect(filteredTodos[0].category).toBe(category);
-
-
+          filterTodos.forEach(todo => {
+            expect(todo.category.indexOf(todoCategory)).toBeGreaterThanOrEqual(0);
+          });
         });
 
 
