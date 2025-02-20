@@ -84,25 +84,31 @@ describe('TodoService', () => {
         });
 
 
+        });
 
 
+        it('filters by status', () => {
+
+          const todoStatus = true;
+          const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
+
+          expect(filteredTodos.length).toBe(2);
+
+          filteredTodos.forEach(todo => {
+            expect(todo.status).toBe(todoStatus);
+
+        });
 
       });
 
+      it('filters by body', () => {
 
-      it('filters by status', () => {
+        const body = 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.';
+        const filteredTodos = todoService.filterTodos(testTodos, { body });
 
-        const todoStatus = true;
-        const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
-
-        expect(filteredTodos.length).toBe(2);
-
-        filteredTodos.forEach(todo => {
-          expect(todo.status).toBe(todoStatus);
-
+        expect(filteredTodos.length).toBe(1);
+        expect(filteredTodos[0].body).toBe(body);
       });
-
-    });
 
 })
 
