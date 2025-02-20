@@ -24,6 +24,10 @@ export class TodoService {
       httpParams = httpParams.set('category', filters.category);
 
 
+
+
+
+      // limits and sorting goes here
     }
   }
 
@@ -39,7 +43,7 @@ export class TodoService {
       let filteredTodos = todos;
 
 
-      
+
       // filter by status
       if (filters.status !== undefined) {
         filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
