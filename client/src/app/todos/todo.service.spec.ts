@@ -45,9 +45,9 @@ describe('TodoService', () => {
     beforeEach(() => {
       // Set up the mock handling of the HTTP requests
       TestBed.configureTestingModule({
-      imports: [],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-  });
+        imports: [],
+        providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+      });
 
 
       // Construct an instance of the service with the mock HTTP client.
@@ -66,52 +66,44 @@ describe('TodoService', () => {
 
     describe(' about filter Todos', () => {
 
+      
 
-      it(`filters by category`, () => {
+        it(`filters by status`, () => {
 
+          const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-        const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
+          todoService.getTodos({ status: true }).subscribe(() => {
 
-        todoService.getTodos({ category: 'video games' }).subscribe(() => {
+            expect(mockedMethod)
+              .withContext('one call')
+              .toHaveBeenCalledTimes(1);
 
-          expect(mockedMethod)
-            .withContext('one call')
-            .toHaveBeenCalledTimes(1);
-
-          expect(mockedMethod)
-            .withContext('talks to the correct endpoint')
-            .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('category', 'video games') });
+            expect(mockedMethod)
+              .withContext('talks to the correct endpoint')
+              .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('status', 'true') });
+          });
         });
 
 
-        });
-
-
-        it('filters by status', () => {
-
-          const todoStatus = true;
-          const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
-
-          expect(filteredTodos.length).toBe(2);
-
-          filteredTodos.forEach(todo => {
-            expect(todo.status).toBe(todoStatus);
-
-        });
-
-        });
 
         it('filters by body', () => {
 
-          const body = 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.';
-          const filteredTodos = todoService.filterTodos(testTodos, { body });
+          const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-          expect(filteredTodos.length).toBe(1);
-          expect(filteredTodos[0].body).toBe(body);
+          todoService.getTodos({ body: 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.' }).subscribe(() => {
+
+            expect(mockedMethod)
+              .withContext('one call')
+              .toHaveBeenCalledTimes(1);
+
+            expect(mockedMethod)
+              .withContext('talks to the correct endpoint')
+              .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('body', 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.') });
+          });
         });
 
 
-        
+
         it('filters by owner', () => {
 
           const owner = 'Chris';
@@ -122,7 +114,21 @@ describe('TodoService', () => {
         });
 
 
-})
 
 
+        it(`filters by category`, () => {
+
+
+          const category = 'homework';
+          const filteredTodos = todoService.filterTodos(testTodos, { category });
+
+          expect(filteredTodos.length).toBe(1);
+          expect(filteredTodos[0].category).toBe(category);
+
+
+        });
+
+
+
+  })
 });
