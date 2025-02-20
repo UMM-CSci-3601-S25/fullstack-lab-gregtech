@@ -24,6 +24,10 @@ export class TodoService {
       httpParams = httpParams.set('category', filters.category);
 
 
+
+
+
+      // limits and sorting goes here
     }
   }
 
@@ -35,12 +39,23 @@ export class TodoService {
 }
 
 
-    filterTodos(todos: Todo[], filters: { status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] { // skipcq: JS-0105
+    filterTodos(todos: Todo[], filters: { status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
       let filteredTodos = todos;
+
+
 
       // filter by status
       if (filters.status !== undefined) {
         filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
+      }
+      // filter by status might need to be moved to getTodos since it requieres a boolean value
+
+
+
+      // filter by owner
+      if (filters.owner) {
+        filters.owner = filters.owner.toLowerCase();
+        filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
       }
 
 

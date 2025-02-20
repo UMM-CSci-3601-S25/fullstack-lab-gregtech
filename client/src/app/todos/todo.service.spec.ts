@@ -99,16 +99,28 @@ describe('TodoService', () => {
 
         });
 
-      });
+        });
 
-      it('filters by body', () => {
+        it('filters by body', () => {
 
-        const body = 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.';
-        const filteredTodos = todoService.filterTodos(testTodos, { body });
+          const body = 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.';
+          const filteredTodos = todoService.filterTodos(testTodos, { body });
 
-        expect(filteredTodos.length).toBe(1);
-        expect(filteredTodos[0].body).toBe(body);
-      });
+          expect(filteredTodos.length).toBe(1);
+          expect(filteredTodos[0].body).toBe(body);
+        });
+
+
+        
+        it('filters by owner', () => {
+
+          const owner = 'Chris';
+          const filteredTodos = todoService.filterTodos(testTodos, { owner });
+
+          expect(filteredTodos.length).toBe(1);
+          expect(filteredTodos[0].owner).toBe(owner);
+        });
+
 
 })
 
