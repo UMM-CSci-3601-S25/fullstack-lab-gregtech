@@ -7,6 +7,7 @@ import { UserProfileComponent } from './users/user-profile.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { TodoListComponent } from './todos/todo-list.component';
 import { TodoProfileComponent } from './todos/todo-profile.component';
+import { AddTodoComponent } from './todos/add-todo.component';
 
 
 // Note that the 'users/new' route needs to come before 'users/:id'.
@@ -14,6 +15,8 @@ import { TodoProfileComponent } from './todos/todo-profile.component';
 // 'users/new'; the router would just think that the string 'new' is a user ID.
 const routes: Routes = [
   {path: '', component: HomeComponent, title: 'Home'},
+
+  
   {path: 'users', component: UserListComponent, title: 'Users'},
   {path: 'users/new', component: AddUserComponent, title: 'Add User'},
   {path: 'users/:id', component: UserProfileComponent, title: 'User Profile'},
@@ -22,6 +25,7 @@ const routes: Routes = [
 
   {path: 'todos', component: TodoListComponent, title: 'Todos'},
   {path: 'todos/:id', component: TodoProfileComponent, title: 'Todo Profile'},
+  {path: 'todos/new', component: AddTodoComponent, title: 'Add Todo'},
 
 ];
 

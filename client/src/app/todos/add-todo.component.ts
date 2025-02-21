@@ -115,6 +115,9 @@ export class AddTodoComponent {
     );
     this.router.navigate(['/todos/', newId]);
     },
+
+
+
     error: err => {
     if (err.status === 400) {
       this.snackBar.open(
@@ -122,12 +125,14 @@ export class AddTodoComponent {
       'OK',
       { duration: 5000 }
       );
+
     } else if (err.status === 500) {
       this.snackBar.open(
       `The server failed to process your request to add a new todo. Is the server up? – Error Code: ${err.status}\nMessage: ${err.message}`,
       'OK',
       { duration: 5000 }
       );
+      
     } else {
       this.snackBar.open(
       `An unexpected error occurred – Error Code: ${err.status}\nMessage: ${err.message}`,
