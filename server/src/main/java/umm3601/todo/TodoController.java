@@ -6,6 +6,7 @@ import static com.mongodb.client.model.Filters.regex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 //import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -239,7 +240,25 @@ public class TodoController implements Controller {
 
 
 
+public void addNewTodo(Context ctx) {
+  String body = ctx.body();
+  Todo newTodo = ctx.bodyValidator(Todo.class)
+  .check(todo -> todo.owner != null && todo.owner.length() > 0,
+    "Todo must have a non-empty owner; body was " + body)
+  .check(todo -> todo.status == true || todo.status == false,
+    "Todo must have a status; body was " + body)
+  .check(todo -> todo.body != null && todo.body.length() > 0,
+    "Todo must have non-empty body; body was " + body)
+  .check(todo -> todo.category.equals("video games") || todo.category.equals("homework") || todo.category.equals("groceries") || todo.category.equals("software design"),
+    "Todo must have a category; body was " + body)
+    .get();
 
+  todoCollection.insertOne(newTodo);
+
+  ctx.json(Map.of("id", newTodo._id));
+
+  ctx.status(HttpStatus.CREATED);
+}
 
 
 
@@ -261,6 +280,11 @@ public class TodoController implements Controller {
 
     // List Todos, filtered using query parameters
     server.get(API_TODOS, this::getTodos);
+
+    // Add a new Todo with the owner info being in json body
+    //of http request
+    server.post(API_TODOS, this::addNewTodo);
+
 
   }
 }

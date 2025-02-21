@@ -37,7 +37,7 @@ export class TodoService {
 
 
       if (filters.limit) {
-        httpParams = httpParams.set('limit', filters.limit.toString());
+        httpParams = httpParams.set('limit', filters.limit);
       }
 
 
@@ -56,7 +56,7 @@ export class TodoService {
 
     return this.httpClient.get<Todo>(`${this.todoUrl}/${id}`);
   }
-    filterTodos(todos: Todo[], filters: {/*status?: boolean*/ owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
+    filterTodos(todos: Todo[], filters: {status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
       let filteredTodos = todos;
 
       // filter by owner
