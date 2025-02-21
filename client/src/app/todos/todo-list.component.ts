@@ -55,6 +55,7 @@ export class TodoListComponent {
   todoCategory = signal<TodoCategory | undefined>(undefined);
   todoStatus = signal<boolean | undefined>(undefined);
   todoBody = signal<string | undefined>(undefined);
+  todoLimit = signal<number | undefined>(undefined);
 
   viewType = signal<'card' | 'list'>('card');
 
@@ -80,17 +81,19 @@ export class TodoListComponent {
   // definition of `serverFilteredTodos` below to trigger updates to the `Observable` there.
   private todoStatus$ = toObservable(this.todoStatus);
   private todoBody$ = toObservable(this.todoBody);
+  private todoLimit$ = toObservable(this.todoLimit);
 
   // We ultimately `toSignal` this to be able to access it synchronously, but we do all the RXJS operations
   // "inside" the `toSignal()` call processing and transforming the observables there.
 
   serverFilteredTodos =
     toSignal(
-      combineLatest([this.todoStatus$, this.todoBody$]).pipe(
-        switchMap(([status, body]) =>
+      combineLatest([this.todoStatus$, this.todoBody$, this.todoLimit$]).pipe(
+        switchMap(([status, body, limit]) =>
           this.todoService.getTodos({
             status,
             body,
+            limit,
           })
         ),
         catchError((err) => {

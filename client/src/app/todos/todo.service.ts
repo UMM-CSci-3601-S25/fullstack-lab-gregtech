@@ -15,7 +15,7 @@ export class TodoService {
   }
 
   // implement getTodos
-  getTodos(filters: { /*category?: TodoCategory;*/ status?: boolean; body?: string;}): Observable<Todo[]> {
+  getTodos(filters: { limit?: number; status?: boolean; body?: string;}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
 
@@ -30,6 +30,16 @@ export class TodoService {
       }
 
       // limits and sorting goes here
+
+
+      // way to set the limit the number of todos returned on the website
+
+
+      if (filters.limit) {
+        httpParams = httpParams.set('limit', filters.limit.toString());
+      }
+
+
     }
 
 
