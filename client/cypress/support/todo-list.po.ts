@@ -1,83 +1,99 @@
-import { UserRole } from 'src/app/users/user';
+//import { Todo} from 'src/app/todos/todo';
 
-export class UserListPage {
-  private readonly baseUrl = '/users';
-  private readonly pageTitle = '.user-list-title';
-  private readonly userCardSelector = '.user-cards-container app-user-card';
-  private readonly userListItemsSelector = '.user-nav-list .user-list-item';
+export class TodoListPage {
+  private readonly baseUrl = '/todos';
+  private readonly pageTitle = '[data-test=todoListTitle]';
+  private readonly todoCardSelector = '.todo-cards-container app-todo-card';
+  private readonly todoListItemsSelector = '.todo-nav-list .todo-list-item';
   private readonly profileButtonSelector = '[data-test=viewProfileButton]';
+  private readonly todo = '[data-test=todo]';
+  private readonly todoOwnerFilter = '[data-test=todoOwnerFilter]';
+  private readonly todoOwner = '[data-test=todoOwner]';
+  private readonly todoCategory = '[data-test=todoCategory]';
+  private readonly todoCategoryFilter = '[data-test=todoCategoryFilter]';
+  private readonly todoBody = '[data-test=todoBody]';
+  private readonly todoBodyFilter = '[data-test=todoBodyFilter]';
+  private readonly todoStatus = '[data-test=todoStatus]';
+  private readonly todoStatusFilter = '[data-test=todoStatusFilter]';
   private readonly radioButtonSelector = '[data-test=viewTypeRadio] mat-radio-button';
-  private readonly userRoleDropdownSelector = '[data-test=userRoleSelect]';
+  private readonly todoRoleDropdownSelector = '[data-test=todoRoleSelect]';
   private readonly dropdownOptionSelector = 'mat-option';
-  private readonly addUserButtonSelector = '[data-test=addUserButton]';
+  private readonly addTodoButtonSelector = '[data-test=addTodoButton]';
 
   navigateTo() {
     return cy.visit(this.baseUrl);
   }
 
-  /**
-   * Gets the title of the app when visiting the `/users` page.
-   *
-   * @returns the value of the element with the ID `.user-list-title`
-   */
-  getUserTitle() {
+
+  getTodoTitle() {
     return cy.get(this.pageTitle);
   }
 
-  /**
-   * Get all the `app-user-card` DOM elements. This will be
-   * empty if we're using the list view of the users.
-   *
-   * @returns an iterable (`Cypress.Chainable`) containing all
-   *   the `app-user-card` DOM elements.
-   */
-   getUserCards() {
-    return cy.get(this.userCardSelector);
+
+   getTodoCards() {
+    return cy.get(this.todoCardSelector);
   }
 
-  /**
-   * Get all the `.user-list-item` DOM elements. This will
-   * be empty if we're using the card view of the users.
-   *
-   * @returns an iterable (`Cypress.Chainable`) containing all
-   *   the `.user-list-item` DOM elements.
-   */
-  getUserListItems() {
-    return cy.get(this.userListItemsSelector);
+  getVisibleTodos() {
+    return cy.get(this.todo);
   }
 
-  /**
-   * Clicks the "view profile" button for the given user card.
-   * Requires being in the "card" view.
-   *
-   * @param card The user card
-   */
+  getTodoOwners() {
+    return cy.get(this.todoOwner);
+  }
+
+  filterByOwner(owner: string) {
+    return cy.get(this.todoOwnerFilter).type(owner.toString());
+  }
+
+  getTodoCategories() {
+    return cy.get(this.todoCategory);
+  }
+
+  filterByCategory(category: string) {
+    cy.get(this.todoCategoryFilter).click().then(() => {
+      return cy.get(`[value="${category}"]`).click();
+    })
+  }
+
+  getTodoBodies() {
+    return cy.get(this.todoBody);
+  }
+
+  filterByBody(body: string) {
+    return cy.get(this.todoBodyFilter).type(body.toString());
+  }
+
+  getTodoStatuses() {
+    return cy.get(this.todoStatus);
+  }
+
+  filterByStatus(status: string) {
+    cy.get(this.todoStatusFilter).click().then(() => {
+      return cy.get(`[value="${status}"]`).click();
+    })
+  }
+
+
+
+  getTodoListItems() {
+    return cy.get(this.todoListItemsSelector);
+  }
+
+
   clickViewProfile(card: Cypress.Chainable<JQuery<HTMLElement>>) {
     return card.find<HTMLButtonElement>(this.profileButtonSelector).click();
   }
 
-  /**
-   * Change the view of users.
-   *
-   * @param viewType Which view type to change to: "card" or "list".
-   */
+
   changeView(viewType: 'card' | 'list') {
     return cy.get(`${this.radioButtonSelector}[value="${viewType}"]`).click();
   }
 
-  /**
-   * Selects a role to filter in the "Role" selector.
-   *
-   * @param value The role *value* to select, this is what's found in the mat-option "value" attribute.
-   */
-  selectRole(value: UserRole) {
-    // Find and click the drop down
-    cy.get(this.userRoleDropdownSelector).click();
-    // Select and click the desired value from the resulting menu
-    return cy.get(`${this.dropdownOptionSelector}[value="${value}"]`).click();
-  }
 
-  addUserButton() {
-    return cy.get(this.addUserButtonSelector);
+
+
+  addTodoButton() {
+    return cy.get(this.addTodoButtonSelector);
   }
 }

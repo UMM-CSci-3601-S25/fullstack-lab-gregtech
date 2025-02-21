@@ -93,15 +93,15 @@
 //       expect(ownerControl.valid).toBeTruthy();
 //     });
 
-//     it('should fail if we provide an "existing" owner', () => {
-//       ownerControl.setValue('abc123');
-//       expect(ownerControl.valid).toBeFalsy();
-//       expect(ownerControl.hasError('existingOwner')).toBeTruthy();
+//     // it('should fail if we provide an "existing" owner', () => {
+//     //   ownerControl.setValue('abc123');
+//     //   expect(ownerControl.valid).toBeFalsy();
+//     //   expect(ownerControl.hasError('existingOwner')).toBeTruthy();
 
-//       ownerControl.setValue('123abc');
-//       expect(ownerControl.valid).toBeFalsy();
-//       expect(ownerControl.hasError('existingOwner')).toBeTruthy();
-//     });
+//     //   ownerControl.setValue('123abc');
+//     //   expect(ownerControl.valid).toBeFalsy();
+//     //   expect(ownerControl.hasError('existingOwner')).toBeTruthy();
+//     // });
 //   });
 
 //   describe('The category field', () => {
@@ -116,10 +116,10 @@
 //       expect(categoryControl.valid).toBeFalsy();
 //     });
 
-//     it('should be fine with "software design"', () => {
-//       categoryControl.setValue('software design');
-//       expect(categoryControl.valid).toBeTruthy();
-//     });
+//     // it('should be fine with "software design"', () => {
+//     //   categoryControl.setValue('software design');
+//     //   expect(categoryControl.valid).toBeTruthy();
+//     // });
 
 //     it('should fail on invalid categories', () => {
 //       categoryControl.setValue('invalid category');
@@ -144,11 +144,11 @@
 //       expect(bodyControl.valid).toBeTruthy();
 //     });
 
-//     it('should fail on short bodies', () => {
-//       bodyControl.setValue('short');
-//       expect(bodyControl.valid).toBeFalsy();
-//       expect(bodyControl.hasError('minlength')).toBeTruthy();
-//     });
+//     // it('should fail on short bodies', () => {
+//     //   bodyControl.setValue('short');
+//     //   expect(bodyControl.valid).toBeFalsy();
+//     //   expect(bodyControl.hasError('minlength')).toBeTruthy();
+//     // });
 
 //     it('should fail on long bodies', () => {
 //       bodyControl.setValue('x'.repeat(201));
@@ -246,26 +246,4 @@
 //     component.addTodoForm.controls.body.setValue('This is a valid body.');
 //     component.addTodoForm.controls.status.setValue(true);
 //   });
-
-//   //it('should call addTodo() and handle success response', fakeAsync(() => {
-//   //  fixture.ngZone.run(() => {
-//   //    const addTodoSpy = spyOn(todoService, 'addTodo').and.returnValue(of('1'));
-//   //    component.submitForm();
-//   //    expect(addTodoSpy).toHaveBeenCalledWith(component.addTodoForm.value);
-//   //    tick();
-//   //    expect(location.path()).toBe('/todos/1');
-//   //    flush();
-//   //  });
-//   //}));
-// //
-//   //it('should call addTodo() and handle error response', () => {
-//   //  const path = location.path();
-//   //  const errorResponse = { status: 500, message: 'Server error' };
-//   //  const addTodoSpy = spyOn(todoService, 'addTodo')
-//   //    .and
-//   //    .returnValue(throwError(() => errorResponse));
-//   //  component.submitForm();
-//   //  expect(addTodoSpy).toHaveBeenCalledWith(component.addTodoForm.value);
-//   //  expect(location.path()).toBe(path);
-//   //});
 // });

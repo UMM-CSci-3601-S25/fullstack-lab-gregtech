@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TodoService } from './todo.service';
-import { TodoCategory } from './todo';
+import { Todo, TodoCategory } from './todo';
 
 @Component({
   selector: 'app-add-todo',
@@ -17,31 +17,20 @@ import { TodoCategory } from './todo';
   styleUrls: ['./add-todo.component.scss'],
   imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule]
 })
+
+
 export class AddTodoComponent {
 
   addTodoForm = new FormGroup({
-  // We allow alphanumeric input and limit the length for owner name.
   owner: new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(2),
-    // In the real world you'd want to be very careful about having
-    // an upper limit like this because people can sometimes have
-    // very long names. This demonstrates that it's possible, though,
-    // to have maximum length limits.
     Validators.maxLength(50),
-    (fc) => {
-      if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
-        return ({existingName: true});
-      } else {
-        return null;
-      }
-    },
-
-
   ])),
 
 
   // body is required and must be between 5 and 200 characters
+  // might be whats causing the error
   body: new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(5),
@@ -49,7 +38,10 @@ export class AddTodoComponent {
   ])),
 
 
-  status: new FormControl<boolean>(false, Validators.required),
+  status: new FormControl('incomplete', Validators.compose(
+    [Validators.required,
+    Validators.pattern('^(complete|incomplete)$')
+  ])),
 
 
   category: new FormControl<TodoCategory>('groceries', Validators.compose([
@@ -71,15 +63,16 @@ export class AddTodoComponent {
   ],
   category: [
     {type: 'required', message: 'Category is required'},
-  ],
-  body: [
-    {type: 'required', message: 'Body is required'},
-    {type: 'minlength', message: 'Body must be at least 5 characters long'},
-    {type: 'maxLength', message: 'Body cannot be more than 200 characters long'},
-  ],
-  status: [
-    {type: 'required', message: 'Status is required'},
+    {type: 'pattern', message: 'Category must be either software design, video games, homework, or groceries'},
   ]
+  // body: [
+  //   {type: 'required', message: 'Body is required'},
+  //   {type: 'minlength', message: 'Body must be at least 5 characters long'},
+  //   {type: 'maxLength', message: 'Body cannot be more than 200 characters long'},
+  // ],
+  // status: [
+  //   {type: 'required', message: 'Status is required'},
+  // ]
   };
 
   constructor(
@@ -106,15 +99,18 @@ export class AddTodoComponent {
 
 
   submitForm() {
-  this.todoService.addTodo(this.addTodoForm.value).subscribe({
+    const newTodo: Partial<Todo> = {owner: this.addTodoForm.value.owner, body: this.addTodoForm.value.body, status: this.addTodoForm.value.status === 'Complete', category: this.addTodoForm.value.category};
+
+
+  this.todoService.addTodo(newTodo).subscribe({
     next: (newId) => {
-    this.snackBar.open(
-      `Added todo ${this.addTodoForm.value.owner}`,
+      this.snackBar.open(
+        `Added todo ${this.addTodoForm.value.owner}`,
       null,
       { duration: 2000 }
     );
     this.router.navigate(['/todos/', newId]);
-    },
+  },
 
 
 
@@ -132,7 +128,7 @@ export class AddTodoComponent {
       'OK',
       { duration: 5000 }
       );
-      
+
     } else {
       this.snackBar.open(
       `An unexpected error occurred – Error Code: ${err.status}\nMessage: ${err.message}`,
