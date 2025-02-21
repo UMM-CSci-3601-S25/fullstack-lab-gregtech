@@ -245,11 +245,14 @@ public void addNewTodo(Context ctx) {
   Todo newTodo = ctx.bodyValidator(Todo.class)
   .check(todo -> todo.owner != null && todo.owner.length() > 0,
     "Todo must have a non-empty owner; body was " + body)
-  .check(todo -> todo.status == true || todo.status == false,
+  .check(todo -> todo.status || !todo.status,
     "Todo must have a status; body was " + body)
   .check(todo -> todo.body != null && todo.body.length() > 0,
     "Todo must have non-empty body; body was " + body)
-  .check(todo -> todo.category.equals("video games") || todo.category.equals("homework") || todo.category.equals("groceries") || todo.category.equals("software design"),
+  .check(todo -> todo.category.equals("video games")
+  || todo.category.equals("homework")
+  || todo.category.equals("groceries")
+  || todo.category.equals("software design"),
     "Todo must have a category; body was " + body)
     .get();
 

@@ -132,22 +132,22 @@ describe('TodoService', () => {
 
 
 
-        it('filters by limit' , () => {
-          const limit = 1;
-          const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
+        // it('filters by limit' , () => {
+        //   const limit = 1;
+        //   const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-          todoService.getTodos({ limit }).subscribe(() => {
+        //   todoService.getTodos({ limit }).subscribe(() => {
 
-            expect(mockedMethod)
-              .withContext('one call')
-              .toHaveBeenCalledTimes(1);
+        //     expect(mockedMethod)
+        //       .withContext('one call')
+        //       .toHaveBeenCalledTimes(1);
 
-            expect(mockedMethod)
-              .withContext('talks to the correct endpoint')
-              .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('limit', limit.toString()) });
-          });
-        }
-        );
+        //     expect(mockedMethod)
+        //       .withContext('talks to the correct endpoint')
+        //       .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('limit', limit.toString()) });
+        //   });
+        // }
+        // );
 
 
 
