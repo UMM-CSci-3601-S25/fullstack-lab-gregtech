@@ -131,7 +131,7 @@ describe('TodoService', () => {
 
 
 
-        
+
         it('filters by limit' , () => {
           const limit = 1;
           const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Todo, TodoCategory } from './todo';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
@@ -78,7 +80,11 @@ export class TodoService {
       return filteredTodos;
     }
 
-
+  addTodo(newTodo: Partial<Todo>): Observable<string> {
+    // Send post request to add a new user with the user data as the body.
+    // `res.id` should be the MongoDB ID of the newly added `User`.
+    return this.httpClient.post<{id: string}>(this.todoUrl, newTodo).pipe(map(response => response.id));
+  }
 
 
 
