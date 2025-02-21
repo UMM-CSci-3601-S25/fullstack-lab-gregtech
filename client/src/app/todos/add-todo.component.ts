@@ -38,15 +38,14 @@ export class AddTodoComponent {
   ])),
 
 
-  status: new FormControl('incomplete', Validators.compose(
-    [Validators.required,
-    Validators.pattern('^(complete|incomplete)$')
+  status: new FormControl(false, Validators.compose([
+  Validators.required,
   ])),
 
 
   category: new FormControl<TodoCategory>('groceries', Validators.compose([
     Validators.required,
-    Validators.pattern('^(software design | video games | homework | groceries)$'),
+    Validators.pattern('^(software design|video games|homework|groceries)$'),
   ])),
 
 
@@ -99,7 +98,7 @@ export class AddTodoComponent {
 
 
   submitForm() {
-    const newTodo: Partial<Todo> = {owner: this.addTodoForm.value.owner, body: this.addTodoForm.value.body, status: this.addTodoForm.value.status === 'Complete', category: this.addTodoForm.value.category};
+    const newTodo: Partial<Todo> = {owner: this.addTodoForm.value.owner, body: this.addTodoForm.value.body, status: this.addTodoForm.value.status === true, category: this.addTodoForm.value.category};
 
 
   this.todoService.addTodo(newTodo).subscribe({
