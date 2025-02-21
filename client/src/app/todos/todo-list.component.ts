@@ -112,7 +112,7 @@ export class TodoListComponent {
       )
     );
 
-    
+
   filteredTodos = computed(() => {
     const serverFilteredTodos = this.serverFilteredTodos();
     return this.todoService.filterTodos(serverFilteredTodos, {

@@ -11,6 +11,14 @@
         Home
       </a>
 
+
+      <!-- need to add navigation buttons for todos-->
+
+      <a mat-list-item routerLink="/todos" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
+        <mat-icon matListItemIcon>list</mat-icon>
+        Todos
+      </a>
+
       <a mat-list-item routerLink="/users" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
         <mat-icon matListItemIcon>people</mat-icon>
         Users
