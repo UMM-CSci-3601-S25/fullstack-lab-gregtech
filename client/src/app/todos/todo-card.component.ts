@@ -10,7 +10,13 @@ import { Todo } from './todo';
   selector: 'app-todo-card',
   templateUrl: './todo-card.component.html',
   styleUrls: ['./todo-card.component.scss'],
-  imports: [MatCardModule, MatButtonModule, MatListModule, MatIconModule, RouterLink]
+  imports: [MatCardModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    RouterLink,
+
+  ]
 })
 export class TodoCardComponent {
 

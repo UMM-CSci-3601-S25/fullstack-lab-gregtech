@@ -7,13 +7,16 @@
     @if (!simple()) {
       <mat-card-content>
         <mat-list>
+
           <mat-list-item>
             <mat-icon matListItemIcon>description</mat-icon>
             <p matListItemTitle>Body</p>
-
-
             <p matListItemLine class="todo-card-body">{{ todo().body }}</p>
           </mat-list-item>
+
+
+
+
           <mat-divider [inset]=true></mat-divider>
           <mat-list-item>
             <mat-icon matListItemIcon>check_circle</mat-icon>
