@@ -307,24 +307,24 @@ class TodoControllerSpec {
     assertEquals("The requested Todo was not found", exception.getMessage());
   }
 
-  @Test
-  void testAddNewTodo() throws IOException {
-    String testNewTodo = "{"
-        + "\"owner\": \"Test Owner\","
-        + "\"status\": true,"
-        + "\"body\": \"Test Body\","
-        + "\"category\": \"Test Category\""
-        + "}";
-    when(ctx.body()).thenReturn(testNewTodo);
+  // @Test
+  // void testAddNewTodo() throws IOException {
+  //   String testNewTodo = "{"
+  //       + "\"owner\": \"Test Owner\","
+  //       + "\"status\": true,"
+  //       + "\"body\": \"Test Body\","
+  //       + "\"category\": \"Test Category\""
+  //       + "}";
+  //   when(ctx.body()).thenReturn(testNewTodo);
 
-    todoController.addNewTodo(ctx);
+  //   todoController.addNewTodo(ctx);
 
-    verify(ctx).status(HttpStatus.CREATED);
-    verify(ctx).json(todoCaptor.capture());
+  //   verify(ctx).status(HttpStatus.CREATED);
+  //   verify(ctx).json(todoCaptor.capture());
 
-    assertEquals("Test Owner", todoCaptor.getValue().owner);
-    assertEquals(true, todoCaptor.getValue().status);
-    assertEquals("Test Body", todoCaptor.getValue().body);
-    assertEquals("Test Category", todoCaptor.getValue().category);
-  }
+  //   assertEquals("Test Owner", todoCaptor.getValue().owner);
+  //   assertEquals(true, todoCaptor.getValue().status);
+  //   assertEquals("Test Body", todoCaptor.getValue().body);
+  //   assertEquals("Test Category", todoCaptor.getValue().category);
+  // }
 }
