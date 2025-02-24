@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Todo, TodoCategory } from './todo';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TodoService } from './todo.service';
 import { TodoCardComponent } from './todo-card.component';
 
@@ -48,6 +48,7 @@ import { TodoCardComponent } from './todo-card.component';
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
+    MatAutocompleteModule,
   ],
 })
 export class TodoListComponent {
