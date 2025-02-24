@@ -32,7 +32,7 @@ public class Todo {
   public boolean status;
   public String body;
   public String category;
-  public String limit;
+
 
 
   @Override
@@ -52,12 +52,12 @@ public class Todo {
 
   // Having some kind of `toString()` allows us to print `Todo`s,
   // which can be useful/necessary in error handling. This only
-  // returns the name, but it could be extended to return more or
+  // returns the owner, but it could be extended to return more or
   // all of the fields combined into a single string.
   //
   // The other option would be to return `_id`, but that can be
   // `null` if we're trying to add a new `Todo` to the database
-  // that doesn't yet have an `_id`, so returning `name` seemed
+  // that doesn't yet have an `_id`, so returning `owner` seemed
   // the better bet.
   @Override
   public String toString() {

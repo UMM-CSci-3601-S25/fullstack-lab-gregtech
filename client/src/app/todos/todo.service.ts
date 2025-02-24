@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Todo, TodoCategory } from './todo';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -36,7 +37,7 @@ export class TodoService {
 
 
       if (filters.limit) {
-        httpParams = httpParams.set('limit', filters.limit.toString());
+        httpParams = httpParams.set('limit', filters.limit);
       }
 
 
@@ -55,7 +56,7 @@ export class TodoService {
 
     return this.httpClient.get<Todo>(`${this.todoUrl}/${id}`);
   }
-    filterTodos(todos: Todo[], filters: {/*status?: boolean*/ owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
+    filterTodos(todos: Todo[], filters: {status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] {
       let filteredTodos = todos;
 
       // filter by owner
@@ -78,7 +79,11 @@ export class TodoService {
       return filteredTodos;
     }
 
-
+  addTodo(newTodo: Partial<Todo>): Observable<string> {
+    // Send post request to add a new user with the user data as the body.
+    // `res.id` should be the MongoDB ID of the newly added `Todo`.
+    return this.httpClient.post<{id: string}>(this.todoUrl, newTodo).pipe(map(response => response.id));
+  }
 
 
 

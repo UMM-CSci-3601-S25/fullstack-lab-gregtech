@@ -2,6 +2,7 @@ package umm3601.todo;
 
 //import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 //import static org.junit.jupiter.api.Assertions.assertNotEquals;
 //import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -229,6 +230,36 @@ class TodoControllerSpec {
     }
   }
 
+  @Test
+  void canGetTodoWithStatusFalse() throws IOException {
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put(TodoController.STATUS_KEY, Arrays.asList(new String[] {"false"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
+    when(ctx.queryParam(TodoController.STATUS_KEY)).thenReturn("false");
+
+    todoController.getTodos(ctx);
+
+    verify(ctx).json(todoArrayListCaptor.capture());
+    verify(ctx).status(HttpStatus.OK);
+
+    for (Todo todo : todoArrayListCaptor.getValue()) {
+      assertFalse(todo.status);
+    }
+  }
+
+  @Test
+  void errorsWhenAskingForInvalidStatus() throws IOException {
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put(TodoController.STATUS_KEY, Arrays.asList(new String[] {"notAStatus"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
+    when(ctx.queryParam(TodoController.STATUS_KEY)).thenReturn("notAStatus");
+
+    Throwable exception = assertThrows(BadRequestResponse.class, () -> {
+      todoController.getTodos(ctx);
+    });
+
+    assertEquals("Todo status must be 'complete', 'incomplete', 'true', or 'false'", exception.getMessage());
+  }
 
 
 
@@ -275,4 +306,25 @@ class TodoControllerSpec {
 
     assertEquals("The requested Todo was not found", exception.getMessage());
   }
+
+  // @Test
+  // void testAddNewTodo() throws IOException {
+  //   String testNewTodo = "{"
+  //       + "\"owner\": \"Test Owner\","
+  //       + "\"status\": true,"
+  //       + "\"body\": \"Test Body\","
+  //       + "\"category\": \"Test Category\""
+  //       + "}";
+  //   when(ctx.body()).thenReturn(testNewTodo);
+
+  //   todoController.addNewTodo(ctx);
+
+  //   verify(ctx).status(HttpStatus.CREATED);
+  //   verify(ctx).json(todoCaptor.capture());
+
+  //   assertEquals("Test Owner", todoCaptor.getValue().owner);
+  //   assertEquals(true, todoCaptor.getValue().status);
+  //   assertEquals("Test Body", todoCaptor.getValue().body);
+  //   assertEquals("Test Category", todoCaptor.getValue().category);
+  // }
 }
